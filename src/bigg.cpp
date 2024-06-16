@@ -196,6 +196,10 @@ int bigg::Application::run( int argc, char** argv, bgfx::RendererType::Enum type
 	glfwSetWindowSizeCallback( mWindow, windowSizeCallback );
 
 	// Setup bgfx
+	// Render a frame to prevent init from creating a separate render thread.
+	// Rendering generally has to happen on the same thread as the window.
+	bgfx::renderFrame();
+
 	bgfx::PlatformData platformData;
 	memset( &platformData, 0, sizeof( platformData ) );
 #if BX_PLATFORM_LINUX || BX_PLATFORM_BSD
